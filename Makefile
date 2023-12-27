@@ -1,6 +1,19 @@
 
 VERSION = 3.2a
 
+CC := $(CROSS_COMPILE)gcc
+
+PLATFORM ?= $(UNION_PLATFORM)
+ifeq (,$(PLATFORM))
+PLATFORM=linux
+endif
+
+ifeq ($(PLATFORM),miyoomini)
+CPPFLAGS := -Os -marm -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -march=armv7ve+simd
+else
+CPPFLAGS := -Os
+endif
+
 #CC ?= gcc
 CPPFLAGS += -DVERSION_STR=\"$(VERSION)\"
 CFLAGS += -Wall -g
